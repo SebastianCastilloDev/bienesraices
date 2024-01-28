@@ -1,69 +1,56 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Bienes Raices</title>
     <link rel="stylesheet" href="build/css/app.css">
 </head>
-
 <body>
+    
     <header class="header">
         <div class="contenedor contenido-header">
             <div class="barra">
                 <a href="/">
-                    <img src="build/img/logo.svg" alt="Logotipo de Bienes Raíces">
+                    <img src="build/img/logo.svg" alt="Logotipo de Bienes Raices">
                 </a>
 
-                <nav class="navegacion">
-                    <a href="nosotros.html">Nosotros</a>
-                    <a href="anuncios.html">Anuncios</a>
-                    <a href="blog.html">Blog</a>
-                    <a href="contacto.html">Contacto</a>
-                </nav>
-            </div>
-            <h1>Venta de Casas y Departamentos Exclusivos de lujo</h1>
+                <div class="mobile-menu">
+                    <img src="build/img/barras.svg" alt="icono menu responsive">
+                </div>
+
+                <div class="derecha">
+                    <img class="dark-mode-boton" src="build/img/dark-mode.svg">
+                    <nav class="navegacion">
+                        <a href="nosotros.html">Nosotros</a>
+                        <a href="anuncios.html">Anuncios</a>
+                        <a href="blog.html">Blog</a>
+                        <a href="contacto.html">Contacto</a>
+                    </nav>
+                </div>
+                
+            </div> <!--.barra-->
         </div>
     </header>
-    <main class="contenedor seccion contenido centrado">
+
+    <main class="contenedor seccion contenido-centrado">
         <h1>Guía para la decoración de tu hogar</h1>
+
+   
         <picture>
             <source srcset="build/img/destacada2.webp" type="image/webp">
             <source srcset="build/img/destacada2.jpg" type="image/jpeg">
-            <img loading="lazy" src="build/img/destacada2.jpg" alt="imagen destacada">
+            <img loading="lazy" src="build/img/destacada2.jpg" alt="imagen de la propiedad">
         </picture>
-        <p class="informacion-meta ">Escrito el <span>20/10/2024</span> por: <span>Sebastian</span></p>
+
+        <p class="informacion-meta">Escrito el: <span>20/10/2021</span> por: <span>Admin</span> </p>
+
 
         <div class="resumen-propiedad">
-            <div class="precio">$3.000.000</div>
-            <ul class="iconos-caracteristicas">
-                <li>
-                    <img loading="lazy" src="build/img/icono_wc.svg" alt="icono wc">
-                    <p>3</p>
-                </li>
-                <li>
-                    <img loading="lazy" src="build/img/icono_estacionamiento.svg" alt="icono estacionamiento">
-                    <p>3</p>
-                </li>
-                <li>
-                    <img loading="lazy" src="build/img/icono_dormitorio.svg" alt="icono dormitorios">
-                    <p>4</p>
-                </li>
-            </ul>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae eligendi animi similique corporis
-                molestias repellendus praesentium sint unde quibusdam veritatis nisi ipsum voluptatum deserunt laborum
-                at dolor consequuntur libero quasi, inventore dolorem cupiditate fuga. Officiis eligendi, ex veritatis
-                corporis hic nemo! Corporis debitis reprehenderit, iste error delectus tenetur. Quidem similique,
-                quisquam quos aut sit ducimus omnis temporibus, beatae commodi at, optio nihil culpa aliquid. Adipisci
-                fugiat dignissimos amet numquam voluptatibus corporis error vel eos perspiciatis qui animi placeat velit
-                nobis dolorem aliquam dicta tempore, officia et voluptates sed. Nihil eligendi iusto ab vero cupiditate
-                quisquam beatae nam aut assumenda nesciunt!</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto nam, voluptate et fuga optio rem
-                soluta itaque temporibus necessitatibus ex, adipisci cum esse consequatur repellat excepturi eveniet
-                assumenda tempora quos!</p>
-        </div>
+            <p>Proin consequat viverra sapien, malesuada tempor tortor feugiat vitae. In dictum felis et nunc aliquet molestie. Proin tristique commodo felis, sed auctor elit auctor pulvinar. Nunc porta, nibh quis convallis sollicitudin, arcu nisl semper mi, vitae sagittis lorem dolor non risus. Vivamus accumsan maximus est, eu mollis mi. Proin id nisl vel odio semper hendrerit. Nunc porta in justo finibus tempor. Suspendisse lobortis dolor quis elit suscipit molestie. Sed condimentum, erat at tempor finibus, urna nisi fermentum est, a dignissim nisi libero vel est. Donec et imperdiet augue. Curabitur malesuada sodales congue. Suspendisse potenti. Ut sit amet convallis nisi.</p>
 
+            <p>Aliquam lectus magna, luctus vel gravida nec, iaculis ut augue. Praesent ac enim lorem. Quisque ac dignissim sem, non condimentum orci. Morbi a iaculis neque, ac euismod felis. Fusce augue quam, fermentum sed turpis nec, hendrerit dapibus ante. Cras mattis laoreet nibh, quis tincidunt odio fermentum vel. Nulla facilisi.</p>
+        </div>
     </main>
 
     <footer class="footer seccion">
@@ -75,10 +62,10 @@
                 <a href="contacto.html">Contacto</a>
             </nav>
         </div>
-        <p class="copyright">Casi todos los derechos reservados &copy;</p>
+
+        <p class="copyright">Todos los derechos Reservados 2021 &copy;</p>
     </footer>
 
     <script src="build/js/bundle.min.js"></script>
 </body>
-
 </html>

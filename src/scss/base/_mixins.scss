@@ -22,17 +22,19 @@
     grid-template-columns: repeat($columnas, 1fr);
 }
 
-@mixin boton($bgColor, $display) {
+@mixin boton($bgColor, $display ) {
     background-color: $bgColor;
     color: $blanco;
     font-weight: $bold;
     text-decoration: none;
     padding: 1rem 3rem;
     text-align: center;
-    margin-top: calc($separacion / 2);
+    margin-top:  calc($separacion / 2) 0;
     display: $display;
+    border: none;
+
     &:hover {
-        background-color: darken($bgColor, 5%);
-        
+        background-color: darken($bgColor, 5);
+        cursor: pointer;
     }
 }

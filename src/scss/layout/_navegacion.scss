@@ -1,7 +1,7 @@
 .derecha {
     display: flex;
     flex-direction: column;
-
+    align-items: center;
 
     @include tablet {
         align-items: flex-end;
@@ -10,15 +10,16 @@
     .dark-mode-boton {
         width: 3rem;
         margin-top: 3rem;
-        margin-bottom: 3rem;
-        filter: invert(1);
+        margin-bottom: 2rem;
+        filter: invert(100%);
+
         &:hover {
             cursor: pointer;
         }
-    }
 
-    @include tablet {
-        margin-top: 0;
+        @include tablet {
+            margin-top: 0;
+        }
     }
 }
 
@@ -27,11 +28,10 @@
     flex-direction: column;
     align-items: center;
     padding-top: 3rem;
-    @include tablet{
+    @include tablet {
         flex-direction: row;
         justify-content: space-between;
-    align-items: flex-end
-
+        align-items: flex-end;
     }
 }
 
@@ -40,15 +40,15 @@
     visibility: hidden;
     opacity: 0;
     height: 0;
-    transition: visibility .3s ease-in-out, opacity .3s linear, height .3s linear;
+    transition: visibility .3s ease-in-out, opacity .5s linear, height .5s linear; 
 
-    @include tablet{
+    @include tablet {
         display: flex;
         align-items: center;
         opacity: 1;
         visibility: visible;
     }
-
+    
     a {
         color: $blanco;
         text-decoration: none;
@@ -56,38 +56,35 @@
         display: block;
         text-align: center;
 
-        @include tablet{
-            margin: 2rem;
+        @include tablet {
+            margin-right: 2rem;
             font-size: 1.8rem;
+
             &:last-of-type {
                 margin-right: 0;
             }
         }
+
+        &:hover {
+            color: $verde;
+        }
     }
 }
 
-// Menu hamburguesa
+
+/** Menu de hamburguesa **/
 .mobile-menu {
-    @include tablet{
+    @include tablet {
         display: none;
     }
 
     img {
         width: 5rem;
-        &:hover {
-            cursor: pointer;
-        }
-        
     }
 }
 
 .mostrar {
     visibility: visible;
     opacity: 1;
-    display: flex;
-    flex-direction: column;
     height: auto;
-    @include tablet{
-        flex-direction: row;
-    }
 }
