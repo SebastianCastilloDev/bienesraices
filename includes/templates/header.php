@@ -10,7 +10,7 @@
 </head>
 <body>
     
-    <header class="header <?php echo isset( $inicio ) ? 'inicio' : ''; ?>">
+    <header class="header <?php echo  $inicio  ? 'inicio' : ''; ?>">
         <div class="contenedor contenido-header">
             <div class="barra">
                 <a href="/index.php">
@@ -32,7 +32,7 @@
    
                 
             </div> <!--.barra-->
-            <?php if(isset($inicio)) { ?>
+            <?php if($inicio) { ?>
                 <h1>Venta de Casas y Departamentos  Exclusivos de Lujo</h1>
             <?php } ?>
         </div>
