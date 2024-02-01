@@ -4,6 +4,10 @@
 
     $db = conectarDB();
 
+    // Arreglo con mensajes de errores
+    $errores = [];
+    //Ejecutar el código después de que el usuario envía información.
+
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
         $titulo = $_POST['titulo'];
@@ -13,6 +17,34 @@
         $wc = $_POST['wc'];
         $estacionamiento = $_POST['estacionamiento'];
         $vendedorId = $_POST['vendedor'];
+
+        if(!$titulo) {
+            $errores[] = "Debes añadir un título";
+        }
+        if(!$precio) {
+            $errores[] = "Debes añadir un precio";
+        }
+        if( strlen($descripcion) < 50) {
+            $errores[] = "Debes añadir un descripción y debe tener al menos 50 caracteres";
+        }
+        if(!$habitaciones) {
+            $errores[] = "Debes añadir el número de habitaciones";
+        }
+        if(!$wc) {
+            $errores[] = "Debes añadir un numero de baños";
+        }
+        if(!$estacionamiento) {
+            $errores[] = "Debes añadir un número de estacionamientosl";
+        }
+        if(!$vendedorId) {
+            $errores[] = "Debes añadir un vendedor";
+        }
+
+        echo "<pre>";
+        var_dump($errores);
+        echo "<pre>";
+
+        exit;
 
         //Insertar en la base de datos
         $query = " INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, vendedorId) VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$vendedorId')";
