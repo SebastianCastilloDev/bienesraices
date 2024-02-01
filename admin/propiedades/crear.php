@@ -37,23 +37,27 @@
             $errores[] = "Debes añadir un número de estacionamientosl";
         }
         if(!$vendedorId) {
-            $errores[] = "Debes añadir un vendedor";
+            $errores[] = "Debes elegir un vendedor";
         }
 
-        echo "<pre>";
-        var_dump($errores);
-        echo "<pre>";
+        // echo "<pre>";
+        // var_dump($errores);
+        // echo "<pre>";
 
-        exit;
+        // Revisar que el arreglo de errores esté vacío
+        if (empty($errores)) {
+            //Insertar en la base de datos
+            $query = " INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, vendedorId) VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$vendedorId')";
 
-        //Insertar en la base de datos
-        $query = " INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, vendedorId) VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$vendedorId')";
+            $resultado = mysqli_query($db, $query);
 
-        $resultado = mysqli_query($db, $query);
-
-        if($resultado) {
-            echo "Insertado correctamente";
+            if($resultado) {
+                echo "Insertado correctamente";
+            }
         }
+
+
+        
 
     }
     
@@ -100,6 +104,7 @@
                 <legend>Vendedor:</legend>
 
                 <select name="vendedor" id="">
+                    <option value="">-- Seleccione --</option>
                     <option value="1">Juan</option>
                     <option value="2">Karen</option>
                 </select>
