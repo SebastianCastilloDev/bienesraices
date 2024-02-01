@@ -1,11 +1,13 @@
 <?php
 
-function conectarDB(){
-    $db = mysqli_connect('localhost', 'root', '', 'bienesraices_crud');
+function conectarDB() : mysqli{
+    $db = mysqli_connect('127.0.0.1', 'root', '', 'bienesraices_crud');
 
-    if ($db) {
-        echo "Se conectó";
-    } else {
-        echo "No se conectó";
-    }
+
+
+    if (!$db) {
+        echo "No se pudo conectar";
+        exit;
+    } 
+    return $db;
 }
