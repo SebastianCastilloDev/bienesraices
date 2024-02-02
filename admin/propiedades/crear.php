@@ -61,7 +61,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $resultado = mysqli_query($db, $query);
 
         if ($resultado) {
-            echo "Insertado correctamente";
+            // Redireccionar
+            header('Location: /admin');
         }
     }
 }
