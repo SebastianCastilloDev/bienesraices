@@ -4,6 +4,10 @@ require '../../includes/config/database.php';
 
 $db = conectarDB();
 
+// Consulta para obtener los vendedores
+$consulta = "SELECT * FROM vendedores";
+$resultado = mysqli_query($db, $consulta);
+
 // Arreglo con mensajes de errores
 $errores = [];
 
@@ -117,8 +121,10 @@ incluirTemplate('header');
 
             <select name="vendedor" id="">
                 <option value="">-- Seleccione --</option>
-                <option value="1">Juan</option>
-                <option value="2">Karen</option>
+                <?php while ($vendedor = mysqli_fetch_assoc($resultado)) : ?>
+                    <option value="<?php echo $vendedor['id']; ?>"><?php echo $vendedor['nombre'] . " " . $vendedor["apellido"]; ?></option>
+                <?php endwhile; ?>
+
             </select>
         </fieldset>
 
