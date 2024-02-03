@@ -138,4 +138,27 @@ if (empty($errores)) {
 Nos valdremos de las funciones `is_dir` y `mkdir` para crear la carpeta en caso de que no exista. Luego, con la función `move_uploaded_file` moveremos el archivo al servidor.
 
 
+### Generando nombres únicos para las imágenes
 
+Si se suben dos imágenes con el mismo nombre, la segunda imagen sobreescribirá a la primera. Para evitar esto, se puede generar un nombre único para cada imagen. Para ello, se puede utilizar la función `uniqid` de PHP.
+
+```php
+  // Generar un nombre único
+        $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
+
+        // Subir la imagen al servidor
+        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
+```
+
+Nos valdremos de la función `md5` para generar un hash único, y de la función `uniqid` para generar un identificador único. Luego, concatenaremos ambos valores y le agregaremos la extensión del archivo.
+
+NOTA: No utilizar md5 para funciones de seguridad, ya que es vulnerable a ataques de colisión. En este caso, no es un problema, ya que no estamos utilizando md5 para funciones de seguridad. 
+
+Finalmente actualizaremos nuestra consulta SQL para guardar el nombre de la imagen en la base de datos.
+
+```php
+
+$query = " INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId) VALUES ('$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId')";
+```
+
+Note que en el campo imagen, guardamos el nombre de la imagen generado por la funcionalidad que acabamos de implementar.
