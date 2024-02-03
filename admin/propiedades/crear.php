@@ -22,6 +22,10 @@ $vendedorId = '';
 //Ejecutar el código después de que el usuario envía información.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    $numero =  "1HOLA";
+    $numero =  1;
+    exit;
+
     $titulo = $_POST['titulo'];
     $precio = $_POST['precio'];
     $descripcion = $_POST['descripcion'];
