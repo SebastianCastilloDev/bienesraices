@@ -28,7 +28,77 @@ $nombre = mysqli_real_escape_string($db, $_POST['nombre']);
 ```
 **NOTA: NUNCA CONFIES EN LOS DATOS DE ENTRADA (para no decir usuarios), SIEMPRE SANITIZA Y VALIDA LOS DATOS.**
 
+## Subida de imagenes al servidor
 
+NUNCA subir archivos binarios a la base de datos, siempre subirlos al servidor y guardar la ruta en la base de datos.
 
+Consideremos el siguiente fragmento de código:
 
+```html
+<label for="imagen">Imagen:</label>
+<input type="file" id="imagen" name="imagen" accept="image/jpeg, image/png">
+```
+
+al hacer un var_dump de $_POST obtendremos este resultado:
+
+```php
+array(8) {
+...
+  ["imagen"]=>
+  string(14) "destacada3.jpg"
+...
+}
+```
+Esto pasa porque el archivo no se sube a la base de datos, sino que se sube al servidor. Por lo tanto, el archivo no se encuentra en \$_POST, sino en \$_FILES.
+
+Para poder aceptar archivos, se debe agregar el atributo enctype="multipart/form-data" al formulario.
+
+```html
+<form action="/admin/propiedades/crear.php" method="post" enctype="multipart/form-data">
+``` 
+
+con esto, al hacer un var_dump de \$_FILES obtendremos este resultado:
+
+```php
+array(1) {
+  ["imagen"]=>
+  array(6) {
+    ["name"]=>
+    string(14) "destacada2.jpg"
+    ["full_path"]=>
+    string(14) "destacada2.jpg"
+    ["type"]=>
+    string(10) "image/jpeg"
+    ["tmp_name"]=>
+    string(66) "/private/var/folders/5f/0_dj_sms5dsgmdmvdt749_mw0000gn/T/phpJZNxcJ"
+    ["error"]=>
+    int(0)
+    ["size"]=>
+    int(402453)
+  }
+}
+```
+Con este resultado podemos hacer varias validaciones, como por ejemplo, si el archivo es una imagen, si el archivo pesa menos de 1MB, si el archivo no tiene errores, etc.
+
+Por ejemplo, si quisieramos validar que la imagen pese menos de 100 Kb, podríamos hacer lo siguiente:
+
+```php
+// Limitar a 100kb máximo
+$tamanoMaximoImagen = 1000 * 100;
+
+if ($imagen['size'] > $tamanoMaximoImagen) {
+    $errores[] = "El tamaño máximo de la imagen es de 100kb";
+}
+```
+Nota: La elección entre 1000 y 1024 para la conversión de bytes a kilobytes depende de la interpretación del kilobyte. La convención histórica y estándar en sistemas de almacenamiento y transferencia de datos utiliza 1 kilobyte como 1024 bytes. Sin embargo, en algunos contextos, especialmente en el ámbito de la informática, se utiliza la definición del Sistema Internacional de Unidades (SI), donde 1 kilobyte es exactamente 1000 bytes.
+
+## Tamaños de imagen superior a 2 Mb.
+
+Si se intenta subir una imagen superior a 2 Mb, se obtendrá un error de tipo 1. Podemos agregar esto a nuestra validacion:
+
+```php
+if (!$imagen['name'] || $imagen['error']) {
+    $errores[] = "Debes subir una imagen";
+}
+```
 

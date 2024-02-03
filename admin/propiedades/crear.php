@@ -22,9 +22,6 @@ $vendedorId = '';
 //Ejecutar el código después de que el usuario envía información.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $numero =  "1HOLA";
-    $numero =  1;
-    exit;
 
     $titulo = mysqli_real_escape_string($db, $_POST['titulo']);
     $precio = mysqli_real_escape_string($db, $_POST['precio']);
@@ -34,6 +31,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $estacionamiento = mysqli_real_escape_string($db, $_POST['estacionamiento']);
     $vendedorId = mysqli_real_escape_string($db, $_POST['vendedor']);
     $creado = date('Y/m/d');
+
+    // Asignar files hacia una variable
+    $imagen = $_FILES['imagen'];
+    echo "<pre>";
+    var_dump($imagen);
+    echo "</pre>";
+
+    exit;
 
     if (!$titulo) {
         $errores[] = "Debes añadir un título";
@@ -55,6 +60,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if (!$vendedorId) {
         $errores[] = "Debes elegir un vendedor";
+    }
+    if (!$imagen['name'] || $imagen['error']) {
+        $errores[] = "Debes subir una imagen";
+    }
+
+    // Limitar a 100kb máximo
+    $tamanoMaximoImagen = 1000 * 100;
+
+    if ($imagen['size'] > $tamanoMaximoImagen) {
+        $errores[] = "El tamaño máximo de la imagen es de 100kb";
     }
 
     // Revisar que el arreglo de errores esté vacío
@@ -86,7 +101,7 @@ incluirTemplate('header');
     <?php } ?>
 
 
-    <form class="formulario" method="POST" action="/admin/propiedades/crear.php">
+    <form class="formulario" method="POST" action="/admin/propiedades/crear.php" enctype="multipart/form-data">
         <fieldset>
             <legend>Información General</legend>
 
