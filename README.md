@@ -102,3 +102,40 @@ if (!$imagen['name'] || $imagen['error']) {
 }
 ```
 
+### Modificando el archivo php.ini para permitir subir archivos de mayor tamaño
+
+Para solucionar esto, se debe modificar el archivo php.ini. En el archivo php.ini modificaremos la directiva upload_max_filesize y post_max_size. Por ejemplo, si se quisiera subir archivos de hasta 10 Mb, se debería modificar el archivo php.ini de la siguiente manera:
+
+```php
+upload_max_filesize = 10M
+post_max_size = 10M
+```
+
+Con la instrucción `php --ini` se puede ver la ubicación del archivo php.ini.
+
+### Almacenamiento de la imagen en el servidor
+
+Como criterio para guardar imagenes en el servidor, lo haremos cuando no existan errores, en nuestro caso cuando el array de errores esté vacío.
+
+```php
+if (empty($errores)) {
+        // Subida de archivos
+        // Crear carpeta
+        $carpetaImagenes = '../../imagenes/';
+
+        if (!is_dir($carpetaImagenes)) {
+            mkdir($carpetaImagenes);
+        }
+
+        // Subir la imagen al servidor
+        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $imagen['name']);
+        .
+        .
+        .
+}
+```
+
+Nos valdremos de las funciones `is_dir` y `mkdir` para crear la carpeta en caso de que no exista. Luego, con la función `move_uploaded_file` moveremos el archivo al servidor.
+
+
+

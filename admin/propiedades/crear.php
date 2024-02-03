@@ -34,11 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Asignar files hacia una variable
     $imagen = $_FILES['imagen'];
-    echo "<pre>";
-    var_dump($imagen);
-    echo "</pre>";
 
-    exit;
 
     if (!$titulo) {
         $errores[] = "Debes añadir un título";
@@ -66,14 +62,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Limitar a 100kb máximo
-    $tamanoMaximoImagen = 1000 * 100;
+    $tamanoMaximoImagen = 1000 * 1000;
 
     if ($imagen['size'] > $tamanoMaximoImagen) {
-        $errores[] = "El tamaño máximo de la imagen es de 100kb";
+        $errores[] = "El tamaño máximo de la imagen es de 1Mb";
     }
 
     // Revisar que el arreglo de errores esté vacío
     if (empty($errores)) {
+        // Subida de archivos
+        // Crear carpeta
+        $carpetaImagenes = '../../imagenes/';
+
+        if (!is_dir($carpetaImagenes)) {
+            mkdir($carpetaImagenes);
+        }
+
+        // Subir la imagen al servidor
+        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $imagen['name']);
+
+
         //Insertar en la base de datos
         $query = " INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId) VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId')";
 
