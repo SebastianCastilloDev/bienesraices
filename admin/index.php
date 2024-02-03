@@ -1,13 +1,19 @@
 <?php
-    require '../includes/funciones.php';
-    incluirTemplate('header');
+
+$resultado = $_GET['resultado'] ?? null;
+
+require '../includes/funciones.php';
+incluirTemplate('header');
 ?>
 
-    <main class="contenedor seccion">
-        <h1>Administrador de Bienes Raíces</h1>
-        <a href="/admin/propiedades/crear.php" class="boton boton-verde">Nueva propiedad</a>
-    </main>
+<main class="contenedor seccion">
+    <h1>Administrador de Bienes Raíces</h1>
+    <?php if (intval($resultado) === 1) : ?>
+        <p class="alerta exito">Anuncio creado correctamente</p>
+    <?php endif; ?>
+    <a href="/admin/propiedades/crear.php" class="boton boton-verde">Nueva propiedad</a>
+</main>
 
- <?php
-    incluirTemplate('footer');
+<?php
+incluirTemplate('footer');
 ?>

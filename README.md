@@ -158,7 +158,55 @@ Finalmente actualizaremos nuestra consulta SQL para guardar el nombre de la imag
 
 ```php
 
-$query = " INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId) VALUES ('$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId')";
+$query = "INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId) VALUES ('$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId')";
 ```
 
 Note que en el campo imagen, guardamos el nombre de la imagen generado por la funcionalidad que acabamos de implementar.
+
+## Pasando datos de una vista a otra (mostrar un mensaje de alerta)
+
+Podemos pasar valores a través de un query string. Para ello vamos a modificar la instrucción header de la siguiente manera:
+
+```php
+header('Location: /admin?mensaje=MensajeURL');
+```
+
+
+La forma de obtener estos datos en el `admin/index.php` sería la siguiente:
+
+```php
+if ($_GET['mensaje']) {
+    $mensaje = $_GET['mensaje'];
+}
+```
+Notemos que se accede a los valores de la URL a través de la variable superglobal \$_GET.
+
+Es más recomendable pasar mensajes a través de algún código (un numero) que se procese internamente y no enviar el mensaje de forma explícita en la URL. 
+
+```php
+header('Location: /admin?resultado=1');
+```
+
+Y en el archivo `admin/index.php` recibiremos ese mensaje por get y lo procesaremos de la siguiente manera:
+
+```php
+
+<?php
+    $resultado = $_GET['resultado'] ?? null;
+    .
+    .
+    .
+?>
+
+<main class="contenedor seccion">
+    .
+    .
+    .
+    <?php if (intval($resultado) === 1) : ?>
+        <p class="alerta exito">Anuncio creado correctamente</p>
+    <?php endif; ?>
+    .
+    .
+    .
+</main>
+```
