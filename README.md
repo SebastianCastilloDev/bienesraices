@@ -284,3 +284,30 @@ if (!$id) {
     header('Location: /admin');
 }
 ```
+
+Para obtener los datos de la propiedad lo hacemos de la siguiente manera:
+
+```php
+// Obtener los datos de la propiedad
+$consultaPropiedad = "SELECT * FROM propiedades WHERE id=${id}";
+$resultadoPropiedad = mysqli_query($db, $consultaPropiedad);
+$propiedad = mysqli_fetch_assoc($resultadoPropiedad);
+```
+
+Luego, vamos a almacenar los datos de la propiedad en variables para poder mostrarlos en la vista.
+
+```php
+$titulo = $propiedad['titulo'];
+$precio = $propiedad['precio'];
+$descripcion = $propiedad['descripcion'];
+$habitaciones = $propiedad['habitaciones'];
+$wc = $propiedad['wc'];
+$estacionamiento = $propiedad['estacionamiento'];
+$vendedorId = $propiedad['vendedorId'];
+$imagenPropiedad = $propiedad['imagen'];
+```
+En nuestro html agregamos:
+  
+```php
+  <img src="/imagenes/<?php echo $imagenPropiedad; ?>" alt="" class="imagen-small">
+```
