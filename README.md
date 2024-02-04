@@ -210,3 +210,57 @@ Y en el archivo `admin/index.php` recibiremos ese mensaje por get y lo procesare
     .
 </main>
 ```
+## Listando las propiedades.
+
+En nuestro archivo `admin/index.php` vamos a listar las propiedades que se encuentran en la base de datos. Para ello, vamos a realizar una consulta a la base de datos.
+
+```php
+<?php
+
+//Importar la conexión
+require '../includes/config/database.php';
+$db = conectarDB();
+
+//Escribir el query
+$query = "SELECT * FROM propiedades";
+
+//Consultar la base de datos
+$resultadoConsulta = mysqli_query($db, $query);
+```
+Luego vamos a recorrer el resultado de la consulta y vamos a mostrar los datos en la vista. Para ello vamos a utilizar la función `mysqli_fetch_assoc` que nos devolverá un array asociativo con los datos de la base de datos. Esto se escribirá en la sección de tbody de la tabla, iterando sobre el resultado de la consulta y escribiendo los datos en un tr.
+
+El código actual es este:
+
+```php
+<tr>
+    <td>1</td>
+    <td>Casa en la playa</td>
+    <td><img src="/imagenes/85bf4c3057dcae5ddbd646c4293fcc9a.jpg" alt="imagen" class="imagen-tabla"></td>
+    <td>$1200000</td>
+    <td>
+        <a href="#" class="boton-rojo-block">Eliminar</a>
+        <a href="#" class="boton-amarillo-block">Actualizar</a>
+    </td>
+</tr>
+```
+
+Y el código que vamos a escribir es este:
+
+```php
+<tbody>
+    <?php while ($propiedad = mysqli_fetch_assoc($resultadoConsulta)) : ?>
+        <tr>
+            <td><?php echo $propiedad['id']; ?></td>
+            <td><?php echo $propiedad['titulo']; ?></td>
+            <td><img src="/imagenes/<?php echo $propiedad['imagen']; ?>" alt="imagen" class="imagen-tabla"></td>
+            <td>$ <?php echo $propiedad['precio']; ?></td>
+            <td>
+                <a href="#" class="boton-rojo-block">Eliminar</a>
+                <a href="#" class="boton-amarillo-block">Actualizar</a>
+            </td>
+        </tr>
+    <?php endwhile; ?>
+</tbody>
+```
+
+De esta forma, vamos a mostrar todas las propiedades que se encuentran en la base de datos de forma dinámica.
