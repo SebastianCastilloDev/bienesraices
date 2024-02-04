@@ -264,3 +264,23 @@ Y el código que vamos a escribir es este:
 ```
 
 De esta forma, vamos a mostrar todas las propiedades que se encuentran en la base de datos de forma dinámica.
+
+## Actualizando las propiedades
+
+La actualización es una tarea que se realiza con bastante frecuencia en aplicaciones web. En el caso de nuestro proyecto, vamos a permitir que el usuario actualice las propiedades que se encuentran en la base de datos.
+
+Para saber que propiedad vamos a actualizar debemos pasarle el id de la propiedad a través del query string. Por ejemplo, si queremos actualizar la propiedad con id 1, la URL sería la siguiente:
+
+```php
+href="/admin/propiedades/actualizar.php?id=<?php $propiedad['id']; ?>"
+```
+
+Esto nos va a permitir extraer el valor de id pasado en la URL a través de la variable superglobal \$_GET. pero debemos validar que el id sea un número entero.
+
+En el archivo actualizar.php vamos a extraer el id de la URL y en caso de que ese id no sea un número entero, vamos a redirigir al usuario a la página de inicio.
+```php
+$id = filter_var($_GET['id'], FILTER_VALIDATE_INT);
+if (!$id) {
+    header('Location: /admin');
+}
+```
