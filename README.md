@@ -311,3 +311,30 @@ En nuestro html agregamos:
 ```php
   <img src="/imagenes/<?php echo $imagenPropiedad; ?>" alt="" class="imagen-small">
 ```
+
+### Actualizando la base de datos
+
+En este punto el hecho de tener una imagen obligatoria cambia. Ya que ya se ha subido una imagen previamente al momento de crear la propiedad. Por lo tanto, si no se sube una imagen, no se debe borrar la imagen anterior.
+
+Vamos a actualizar la consulta de la base de datos a la siguiente expresión:
+
+```php
+$query = "UPDATE propiedades SET titulo = '$titulo', precio = '$precio', descripcion = '$descripcion', habitaciones = $habitaciones, wc = $wc, estacionamiento = $estacionamiento, vendedorId = $vendedorId WHERE id = $id";
+```
+**NOTA: SIEMPRE DEBEMOS COMPROBAR NUESTRAS QUERYS ANTES DE EJECUTARLAS EN EL CÓDIGO.** 
+
+A continuación modificaremos el valor de resultado enviado a /admin con un valor de 2 de la siguiente manera:
+
+```php
+if ($resultado) {
+    // Redireccionar
+    // resultado=2 es una actualización.
+    header('Location: /admin?resultado=2');
+}
+```
+Finalmente agregaremos el siguiente fragmento para nuestro mensaje de alerta en el archivo `admin/index.php` de la siguiente manera:
+
+```php
+<?php elseif (intval($resultado) === 2) : ?>
+  <p class="alerta exito">Anuncio actualizado correctamente</p>
+```

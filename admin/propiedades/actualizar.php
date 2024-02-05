@@ -11,7 +11,7 @@ require '../../includes/config/database.php';
 $db = conectarDB();
 
 // Obtener los datos de la propiedad
-$consultaPropiedad = "SELECT * FROM propiedades WHERE id=${id}";
+$consultaPropiedad = "SELECT * FROM propiedades WHERE id=$id";
 $resultadoPropiedad = mysqli_query($db, $consultaPropiedad);
 $propiedad = mysqli_fetch_assoc($resultadoPropiedad);
 
@@ -69,9 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$vendedorId) {
         $errores[] = "Debes elegir un vendedor";
     }
-    if (!$imagen['name'] || $imagen['error']) {
-        $errores[] = "Debes subir una imagen";
-    }
 
     // Limitar a 100kb máximo
     $tamanoMaximoImagen = 1000 * 1000;
@@ -84,27 +81,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errores)) {
         // Subida de archivos
         // Crear carpeta
-        $carpetaImagenes = '../../imagenes/';
+        // $carpetaImagenes = '../../imagenes/';
 
-        if (!is_dir($carpetaImagenes)) {
-            mkdir($carpetaImagenes);
-        }
+        // if (!is_dir($carpetaImagenes)) {
+        //     mkdir($carpetaImagenes);
+        // }
 
-        // Generar un nombre único
-        $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
+        // // Generar un nombre único
+        // $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
 
-        // Subir la imagen al servidor
+        // // Subir la imagen al servidor
         move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
 
 
         //Insertar en la base de datos
-        $query = " INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId) VALUES ('$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId')";
+        $query = "UPDATE propiedades SET titulo = '$titulo', precio = '$precio', descripcion = '$descripcion', habitaciones = $habitaciones, wc = $wc, estacionamiento = $estacionamiento, vendedorId = $vendedorId WHERE id = $id";
 
         $resultado = mysqli_query($db, $query);
 
         if ($resultado) {
             // Redireccionar
-            header('Location: /admin?resultado=1');
+            // resultado=2 es una actualización.
+            header('Location: /admin?resultado=2');
         }
     }
 }
@@ -124,7 +122,7 @@ incluirTemplate('header');
     <?php } ?>
 
 
-    <form class="formulario" method="POST" action="/admin/propiedades/crear.php" enctype="multipart/form-data">
+    <form class="formulario" method="POST" enctype="multipart/form-data">
         <fieldset>
             <legend>Información General</legend>
 
