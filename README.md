@@ -366,3 +366,99 @@ if ($imagen['name']) {
     $nombreImagen = $propiedad['imagen'];
 }
 ```
+
+## Eliminando propiedades
+
+Adaptaremos nuestro td en el archivo `admin/index.php` de la siguiente manera:
+
+```php
+<td>
+    <form method="POST" class="w-100">
+        <input type="hidden" name="id" value="<?php echo $propiedad['id']; ?>">
+        <input type="submit" class="boton-rojo-block" value="Eliminar">
+    </form>
+    <a href="/admin/propiedades/actualizar.php?id=<?php echo $propiedad['id']; ?>" class="boton-amarillo-block">Actualizar</a>
+</td>
+```
+
+Recordemos que al no poner un action en el formulario, este se enviará a la misma página. Por lo tanto, en el archivo `admin/index.php` vamos a recibir el id de la propiedad a eliminar y vamos a eliminarla de la base de datos. 
+
+Capturaremos ese id de la siguiente forma:
+
+```php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST['id'];
+}
+```
+
+Esto se hace de esta forma porque mientras no exista ese Request Method, no existirá la superglobal \$_POST.
+
+Este código es vulnerable ya que si inyectamos SQL en la propiedad value del input, Podríamos incluso eliminar la base de datos. 
+
+```php
+<input type="hidden" name="id" value="delete * from propiedades;">
+```
+
+**NOTA: SIEMPRE DEBEMOS SANITIZAR Y VALIDAR PARÁMETROS QUE INTERACTÚEN CON LA BASE DE DATOS. Aunque estos no se le pidan al usuario**
+
+Para evitar esto, vamos a utilizar la función `filter_var` de la siguiente manera:
+
+```php
+$id = filter_var($_POST['id'], FILTER_VALIDATE_INT);
+```
+
+Teniendo en cuenta los aspectos anteriores construiremos la funcionalidad para eliminar la propiedad de la base de datos en dos partes: 
+
+La primera es eliminar el archivo de imagen del servidor. Para ello, vamos a obtener el nombre de la imagen de la base de datos y vamos a eliminarla con la función `unlink` de PHP.
+
+```php
+//Eliminar el archivo
+$query = "SELECT imagen FROM propiedades WHERE id = $id";
+$resultado = mysqli_query($db, $query);
+$propiedad = mysqli_fetch_assoc($resultado);
+
+unlink('../imagenes/' . $propiedad['imagen']);
+```
+
+La segunda parte es eliminar la propiedad de la base de datos. Y lo haremos de la siguiente forma:
+
+```php
+//Eliminar la propiedad
+$query = "DELETE FROM propiedades WHERE id = $id";
+$resultado = mysqli_query($db, $query);
+if ($resultado) {
+    header('Location: /admin?resultado=3');
+}
+```
+
+Utilizaremos el valor 3 para indicar que se ha eliminado una propiedad. Una vez hecho esto podemos evaluar este resultado en el archivo `admin/index.php` de la siguiente manera:
+
+```php
+<?php elseif (intval($resultado) === 3) : ?>
+    <p class="alerta exito">Anuncio eliminado correctamente</p>
+```
+
+Finalmente nuestra funcionalidad de eliminar propiedades estará completa y queda de la siguiente manera:
+
+```php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $id = filter_var($_POST['id'], FILTER_VALIDATE_INT);
+    if ($id) {
+
+        //Eliminar el archivo
+        $query = "SELECT imagen FROM propiedades WHERE id = $id";
+        $resultado = mysqli_query($db, $query);
+        $propiedad = mysqli_fetch_assoc($resultado);
+
+        unlink('../imagenes/' . $propiedad['imagen']);
+
+        //Eliminar la propiedad
+        $query = "DELETE FROM propiedades WHERE id = $id";
+        $resultado = mysqli_query($db, $query);
+        if ($resultado) {
+            header('Location: /admin?resultado=3');
+        }
+    }
+}
+```
