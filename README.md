@@ -338,3 +338,31 @@ Finalmente agregaremos el siguiente fragmento para nuestro mensaje de alerta en 
 <?php elseif (intval($resultado) === 2) : ?>
   <p class="alerta exito">Anuncio actualizado correctamente</p>
 ```
+
+### Eliminando la imagen previa
+Si no eliminamos las imagenes previas, estas se acumularán en el servidor. Para eliminar la imagen previa, vamos a utilizar la función `unlink` de PHP. Esta función recibe como parámetro la ruta de la imagen que queremos eliminar.
+
+```php
+if($imagen['name']){
+  // Eliminar la imagen previa
+  unlink($carpetaImagenes . $propiedad['imagen']);
+}
+```
+
+En caso de que no se suba una imagen, no debemos eliminar la imagen previa. Adaptaremos el código de la siguiente manera:
+
+```php
+$nombreImagen = '';
+
+if ($imagen['name']) {
+    // Eliminar la imagen previa
+    unlink($carpetaImagenes . $propiedad['imagen']);
+    // Generar un nombre único
+    $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
+
+    // Subir la imagen al servidor
+    move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
+} else {
+    $nombreImagen = $propiedad['imagen'];
+}
+```
