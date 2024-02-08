@@ -462,3 +462,87 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ```
+
+## Propiedades de la página principal y anuncios dinámicos.
+
+Nota: Se debe revisar los commits para ver los cambios realizados en el código fuente.
+
+Se debe tener en cuenta que en el archivo partial `includes/templates/anuncios.php` las rutas de los require son relativas al archivo que llama al partial, en este caso es el archivo `index.php` que se encuentra en la carpeta raíz. Por lo tanto, las rutas de los require en el archivo `anuncios.php` deben ser relativas a la carpeta raíz.
+
+Para solucionar esto podemos especificar la ruta absoluta de la siguiente manera:
+
+```php
+require __DIR__ . '/../config/database.php';
+```
+
+Mostraremos 3 propiedades en nuestra landing page. Para ello, vamos a realizar una consulta a la base de datos y vamos a mostrar los datos en la vista. En nuestro index.php vamos a realizar la consulta de la siguiente manera:
+
+```php
+<?php
+// Importar la conexion
+require __DIR__ . '/../config/database.php';
+$db = conectarDB();
+
+// Consultar
+$query = "SELECT * FROM propiedades LIMIT $limite";
+
+// Obtener resultados
+$resultado = mysqli_query($db, $query);
+
+?>
+
+div class="contenedor-anuncios">
+    <?php while ($propiedad = mysqli_fetch_assoc($resultado)) : ?>
+        <div class="anuncio">
+
+            <img loading="lazy" src="/imagenes/<?php echo $propiedad['imagen']; ?>" alt="anuncio">
+
+            <div class="contenido-anuncio">
+                <h3><?php echo $propiedad['titulo']; ?></h3>
+                <p><?php echo $propiedad['descripcion']; ?></p>
+                <p class="precio">$ <?php $propiedad['precio'] ?></p>
+
+                <ul class="iconos-caracteristicas">
+                    <li>
+                        <img class="icono" loading="lazy" src="build/img/icono_wc.svg" alt="icono wc">
+                        <p><?php echo $propiedad['wc'] ?></p>
+                    </li>
+                    <li>
+                        <img class="icono" loading="lazy" src="build/img/icono_estacionamiento.svg" alt="icono estacionamiento">
+                        <p><?php echo $propiedad['estacionamiento'] ?></p>
+                    </li>
+                    <li>
+                        <img class="icono" loading="lazy" src="build/img/icono_dormitorio.svg" alt="icono habitaciones">
+                        <p><?php echo $propiedad['habitaciones'] ?></p>
+                    </li>
+                </ul>
+
+                <a href="anuncio.php" class="boton-amarillo-block">
+                    Ver Propiedad
+                </a>
+            </div><!--.contenido-anuncio-->
+        </div><!--anuncio-->
+    <?php endwhile; ?>
+</div> <!--.contenedor-anuncios-->
+```
+
+En el caso de la ruta /anuncios.php vamos a realizar la misma consulta a la base de datos y vamos a mostrar los datos en la vista. En nuestro anuncios.php vamos a mostrar los datos de la siguiente manera:
+
+```php
+<?php
+require 'includes/funciones.php';
+incluirTemplate('header');
+?>
+
+<main class="contenedor seccion">
+    <h2>Casas y Depas en Venta</h2>
+    <?php
+    $limite = 10;
+    include 'includes/templates/anuncios.php';
+    ?>
+</main>
+
+<?php
+incluirTemplate('footer');
+?>
+```
