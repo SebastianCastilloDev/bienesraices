@@ -1,3 +1,22 @@
+# Ejecución local del proyecto
+
+En el directorio del proyecto, ejecutar el siguiente comando:
+
+```bash
+php -S localhost:3000
+```
+En otra terminal ejecutar el siguiente comando:
+
+```bash
+npm install
+```
+Luego ejecutar el siguiente comando:
+
+```bash
+gulp
+```
+también debemos contar con un entorno de ejecución de MySQL.
+
 # Proyecto PHP de Bienes raíces
 
 Este documento contiene las explicaciones acerca de la confeccion de un proyecto con PHP, HTML, CSS y MySQL. Desde la sanitización de datos de entrada en adelante. Contempla 3 tipos de arquitectura. Codigo Espaguetti, POO y MVC. A lo largo de este Readme se irá explicando como se realizó el proyecto, **es importante para ello revisar cada commit para poder ver los cambios realizados en este readme y en el código fuente.**
