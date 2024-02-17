@@ -608,3 +608,16 @@ $resultado = mysqli_query($db, $query);
 if ($resultado->num_rows===0) {
     header('Location: /');
 }
+```
+
+## Autenticacion
+
+Planificaremos la autenticación teniendo en cuenta lo siguiente:
+
+- PHP contiene funciones para hashear passwords.
+- PHP contiene funciones para verificar si un password hasheado es igual a otro password.
+- Un password hasheado es un password que ha sido transformado a través de un algoritmo de hash. El hash es un valor que representa un string de texto, y es único para cada string. Si el string cambia, el hash cambia. Si el string es el mismo, el hash es el mismo. **El hash es irreversible.**
+- Si el usuario olvida su password, se le debe enviar un link para que pueda cambiar su password. No se le debe enviar su password original. El usuario deberá cambiar su password.
+
+**NOTA: Este no será un sistema completo de autenticación.**
+
