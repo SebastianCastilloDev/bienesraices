@@ -706,3 +706,6 @@ mysql> select * from usuarios;
 
 ### Validaciones al formulario
 (Revisar commit)
+
+### Revisar si un usuario existe o no
+(Revisar commit)
