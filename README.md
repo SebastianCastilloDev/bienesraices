@@ -621,3 +621,40 @@ Planificaremos la autenticación teniendo en cuenta lo siguiente:
 
 **NOTA: Este no será un sistema completo de autenticación.**
 
+### Creando una tabla para los usuarios
+
+Durante este proceso vamos a crear un archivo llamado `usuario.php` en la raiz de nuestro proyecto, dentro de este archivo seguiremos los siguientes pasos:
+
+1. Importar la conexión a la base de datos.
+2. Crear un email y password para el usuario.
+3. Query para crear el usuario.
+4. Agregarlo a la base de datos.
+
+De forma paralela, vamos a crear una tabla en la base de datos llamada `usuarios` con los siguientes campos:
+
+id          int
+email       varchar(50)
+password    char(60)
+
+Nuestro archivo usuario.php quedará inicialmente de la siguiente manera:
+
+```php
+<?php
+
+// Importar la conexión
+require 'includes/config/database.php';
+$db = conectarDB();
+
+// Crear un email y password
+$email = "correo@correo.com";
+$password = "123456";
+
+// Query para crear el usuario
+$query = "INSERT INTO usuarios (email, password) VALUES ( '$email', '$password'); ";
+
+echo $query;
+
+// Agregarlo a la base de datos
+mysqli_query($db, $query);
+```
+
