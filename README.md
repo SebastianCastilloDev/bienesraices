@@ -701,5 +701,8 @@ mysql> select * from usuarios;
 +----+-------------------+--------------------------------------------------------------+
 ```
 
-## Creando un formulario para autenticar
+### Creando un formulario para autenticar
+(Revisar commit)
+
+### Validaciones al formulario
 (Revisar commit)
