@@ -31,17 +31,24 @@ require 'includes/funciones.php';
 incluirTemplate('header');
 ?>
 
-<main class="contenedor seccion">
+<main class="contenedor seccion contenido-centrado">
     <h1>Iniciar Sesión</h1>
-    <form method="POST" action="" class="formulario contenido-centrado">
+
+    <?php foreach ($errores as $error) : ?>
+        <div class="alerta error">
+            <?php echo $error; ?>
+        </div>
+    <?php endforeach ?>
+
+    <form method="POST" action="" class="formulario">
         <fieldset>
             <legend>Email y Password</legend>
 
             <label for="email">E-mail</label>
-            <input type="email" placeholder="Tu email" id="email" name="email" required>
+            <input type="email" placeholder="Tu email" id="email" name="email">
 
             <label for="password">Password</label>
-            <input type="tel" placeholder="Tu Password" id="telefono" name="password" required>
+            <input type="tel" placeholder="Tu Password" id="telefono" name="password">
 
             <label for="mensaje">Mensaje</label>
             <textarea name="mensaje" id="mensaje" cols="30" rows="10"></textarea>
