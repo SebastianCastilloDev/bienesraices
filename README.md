@@ -700,3 +700,6 @@ mysql> select * from usuarios;
 |  6 | correo@correo.com | $2y$10$I2QKcg7zhAhZ7Odi4CQY8uHbTS2bwbh/aWfbd55cvJHOB9sOo6Fjy |
 +----+-------------------+--------------------------------------------------------------+
 ```
+
+## Creando un formulario para autenticar
+(Revisar commit)
