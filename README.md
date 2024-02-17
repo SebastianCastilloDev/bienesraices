@@ -658,3 +658,45 @@ echo $query;
 mysqli_query($db, $query);
 ```
 
+### Hasheando passwords
+
+Para hashear passwords vamos a utilizar la función `password_hash` de PHP. Esta función recibe dos parámetros, el password y el algoritmo de hash. El algoritmo de hash que vamos a utilizar es PASSWORD_DEFAULT. Este algoritmo es el recomendado por PHP y es el que se encuentra en uso por defecto. Tambien existe PASSWORD_BCRYPT.
+
+Este hash es un string de 60 caracteres. 
+
+Realizaremos la siguiente modificación en nuestro archivo usuario.php:
+
+```php
+<?php
+
+// Importar la conexión
+require 'includes/config/database.php';
+$db = conectarDB();
+
+// Crear un email y password
+$email = "correo@correo.com";
+$password = "123456";
+
+// Hashear el password
+$passwordHash = password_hash($password, PASSWORD_DEFAULT);
+// Query para crear el usuario
+$query = "INSERT INTO usuarios (email, password) VALUES ( '$email', '$passwordHash'); ";
+
+echo $query;
+
+exit;
+// Agregarlo a la base de datos
+mysqli_query($db, $query);
+```
+Este fragmento de código puede servir como un snippet base para registrar un usuario.
+
+Al consultar la base de datos, veremos que el password se encuentra hasheado.
+
+```
+mysql> select * from usuarios;
++----+-------------------+--------------------------------------------------------------+
+| id | email             | password                                                     |
++----+-------------------+--------------------------------------------------------------+
+|  6 | correo@correo.com | $2y$10$I2QKcg7zhAhZ7Odi4CQY8uHbTS2bwbh/aWfbd55cvJHOB9sOo6Fjy |
++----+-------------------+--------------------------------------------------------------+
+```
