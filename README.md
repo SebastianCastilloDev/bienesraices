@@ -727,3 +727,34 @@ if ($auth) {
     $errores[] = "El password es incorrecto";
 }
 ```
+
+### Iniciar Sesión y la superglobal \$_SESSION
+
+La superglobal \$_SESSION nos permite almacenar información del usuario en el servidor. Esta información se almacena en el servidor y no en el cliente. La información se almacena en un archivo llamado session en forma de un array asociativo.
+
+En nuestro archivo ```login.php``` vamos a iniciar la sesión de la siguiente manera:
+
+```php
+if ($auth) {
+    // El usuario está autenticado
+    session_start();
+
+    // Llenar el arreglo de la sesión
+    $_SESSION['usuario'] = $usuario['email'];
+    $_SESSION['login'] = true;
+
+    // Resto del código
+```
+
+A la variable \$_SESSION le asignamos un array asociativo con la información del usuario. En este caso, el email del usuario y un valor booleano que indica que el usuario está autenticado. Pero también podemos pasarle otros valores como el id del usuario, el nombre, el Rol, etc.
+
+En el archivo ```admin/index.php``` vamos a verificar si el usuario está autenticado. Si no lo está, vamos a redirigirlo a la página de login. Al inicio de nuestro archivo ```admin/index.php``` vamos a iniciar la sesión y vamos a verificar si el usuario está autenticado de la siguiente manera:
+
+```php
+session_start();
+echo "<pre>";
+var_dump($_SESSION);
+echo "</pre>";
+```
+
+Al ingresar a la ruta /admin, veremos que la sesión está iniciada.

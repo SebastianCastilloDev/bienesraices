@@ -33,6 +33,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Verificar si el password es correcto o no
             $auth = password_verify($password, $usuario['password']);
             if ($auth) {
+                // El usuario está autenticado
+                session_start();
+
+                // Llenar el arreglo de la sesión
+                $_SESSION['usuario'] = $usuario['email'];
+                $_SESSION['login'] = true;
+
+                echo "<pre>";
+                var_dump($_SESSION);
+                echo "</pre>";
             } else {
                 $errores[] = "El password es incorrecto";
             }
