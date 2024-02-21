@@ -8,9 +8,9 @@ $errores = [];
 
 // Autenticar al usuario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    echo "<pre>";
-    var_dump($_POST);
-    echo "</pre>";
+    // echo "<pre>";
+    // var_dump($_POST);
+    // echo "</pre>";
 
     $email = mysqli_real_escape_string($db, filter_var($_POST['email'], FILTER_VALIDATE_EMAIL));
     var_dump($email);
@@ -28,9 +28,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errores)) {
         $query = "SELECT * FROM usuarios WHERE email = '$email';";
         $resultado = mysqli_query($db, $query);
-        echo "<pre>";
-        var_dump($resultado);
-        echo "</pre>";
+        // echo "<pre>";
+        // var_dump($resultado);
+        // echo "</pre>";
 
         if ($resultado->num_rows) {
         } else {
@@ -61,10 +61,7 @@ incluirTemplate('header');
             <input type="email" placeholder="Tu email" id="email" name="email">
 
             <label for="password">Password</label>
-            <input type="tel" placeholder="Tu Password" id="telefono" name="password">
-
-            <label for="mensaje">Mensaje</label>
-            <textarea name="mensaje" id="mensaje" cols="30" rows="10"></textarea>
+            <input type="password" placeholder="Tu Password" id="password" name="password">
         </fieldset>
 
         <input type="submit" value="Iniciar Sesión" class="boton boton-verde">
