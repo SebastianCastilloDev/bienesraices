@@ -709,3 +709,21 @@ mysql> select * from usuarios;
 
 ### Revisar si un usuario existe o no
 (Revisar commit)
+
+### Revisar si el password es correcto
+
+Php nos da una funcion para verificar si un password hasheado es igual a otro password. Esta función es `password_verify`. Esta función recibe dos parámetros, el password que queremos verificar y el password hasheado.
+
+```php
+$auth = password_verify($password, $usuario['password']);
+```
+Iremos construyendo la funcionalidad de autenticación de la siguiente manera:
+
+```php
+$auth = password_verify($password, $usuario['password']);
+
+if ($auth) {
+} else {
+    $errores[] = "El password es incorrecto";
+}
+```
