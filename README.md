@@ -781,3 +781,14 @@ Este fragmento de código lo podemos pegar en todas las rutas que queramos prote
 Ya que este fragmento será reutilizado en varias rutas, podemos agregar en el archivo `includes/funciones.php` este  fragmento de código y vamos a incluirlo en todas las rutas que queramos proteger. 
 
 **(Revisar commit para ver la implementación)**
+
+### Cerrar Sesión
+
+Para cerrar nuestra sesión siempre debemos acceder a ella con nuestra variable session_start(), luego de eso la podemos destruir con la función session_destroy(). Aunque existe otro enfoque y es simplemente dejar la variable de sesión vacía.
+
+```php
+session_start();
+$_SESSION = [];
+```
+
+(Revisar commit)
