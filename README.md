@@ -752,9 +752,32 @@ En el archivo ```admin/index.php``` vamos a verificar si el usuario está autent
 
 ```php
 session_start();
-echo "<pre>";
-var_dump($_SESSION);
-echo "</pre>";
+
+$auth = $_SESSION['login'];
+
+if (!$auth) {
+    header('Location: / ');
+}
 ```
 
 Al ingresar a la ruta /admin, veremos que la sesión está iniciada.
+
+### Proteger las rutas con la sesión.
+
+Si al ingresar a una ruta, podemos ver la información de la sesión, esto significa que la ruta no está protegida. Para proteger la ruta, vamos a verificar si el usuario está autenticado. Si no lo está, vamos a redirigirlo a la página de login.
+
+```php
+session_start();
+
+$auth = $_SESSION['login'];
+
+if (!$auth) {
+    header('Location: / ');
+}
+```
+
+Este fragmento de código lo podemos pegar en todas las rutas que queramos proteger.
+
+Ya que este fragmento será reutilizado en varias rutas, podemos agregar en el archivo `includes/funciones.php` este  fragmento de código y vamos a incluirlo en todas las rutas que queramos proteger. 
+
+**(Revisar commit para ver la implementación)**

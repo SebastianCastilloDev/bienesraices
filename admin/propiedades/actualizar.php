@@ -1,5 +1,11 @@
 <?php
 
+require '../../includes/funciones.php';
+$auth = estaAutenticado();
+
+if (!$auth) {
+    header('Location: /');
+}
 
 $id = filter_var($_GET['id'], FILTER_VALIDATE_INT);
 if (!$id) {
